@@ -9,6 +9,28 @@
 #define MAX_SCORES    50
 #define ARQUIVO_MAPA  "mapa.dat"
 #define ARQUIVO_SCORE "scores.txt"
+#define MAX_HISTORICO 200
+
+struct Pilha {
+    char movimentos[MAX_HISTORICO];
+    int topo;
+};
+
+void pilha_inicializar(struct Pilha *p) {
+    p->topo = -1;
+}
+
+void pilha_empurrar(struct Pilha *p, char mov) {
+    if (p->topo < MAX_HISTORICO - 1)
+        p->movimentos[++p->topo] = mov;
+}
+
+void pilha_exibir(struct Pilha *p) {
+    printf("Historico de movimentos: ");
+    for (int i = 0; i <= p->topo; i++)
+        printf("%c ", p->movimentos[i]);
+    printf("\n");
+}
 
 struct Posicao {
     int x;
@@ -207,6 +229,8 @@ void inicializar_mapa_padrao(struct Moeda *moedas, struct Pedra *pedras) {
 
 int main() {
     struct Jogador jogador;
+    struct Pilha historico;
+    pilha_inicializar(&historico);
     struct Moeda  *moedas = NULL;
     struct Pedra  *pedras = NULL;
     int qtd_moedas = 0, qtd_pedras = 0;
@@ -272,6 +296,7 @@ int main() {
         if (comando == 'q') break;
 
         mover(&jogador, comando);
+        pilha_empurrar(&historico, comando);
         verificar_pedra(&jogador, pedras, qtd_pedras);
 
         if (jogador.estado == VIVO) {
@@ -294,6 +319,7 @@ int main() {
     printf("\nFim de jogo! Pontuacao final: %d | Vida restante: %d\n",
            jogador.pontos, jogador.vida);
 
+    pilha_exibir(&historico);
     registrar_pontuacao(jogador.nome, jogador.pontos);
 
     free(moedas);
