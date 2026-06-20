@@ -1,6 +1,6 @@
 # 🏴‍☠️ Caça ao Tesouro
 
-Projeto desenvolvido em linguagem C como atividade acadêmica da disciplina de Programação Estruturada.
+Projeto desenvolvido em linguagem C como atividade acadêmica das disciplinas Algoritmos e Estruturas de Dados I e Laboratório de Algoritmos e Estruturas de Dados I .
 
 ## 📖 Sobre o Projeto
 
